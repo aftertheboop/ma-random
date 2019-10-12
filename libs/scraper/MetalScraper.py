@@ -24,7 +24,7 @@ class MetalScraper:
 
     if response['aaData']:
       self.process(response['aaData'])
-      print(target)
+      print(target + ' complete')
       # scrape complete
       self.displaystart = int(self.displaystart) + int(self.displaylength)
       self.updatedisplaystart(self.displaystart)
