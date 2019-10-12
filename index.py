@@ -2,6 +2,7 @@ import random
 import urllib.request
 import sqlite3
 from libs.RandomBand import RandomBand
+from libs.scraper.MetalScraper import MetalScraper
 from bs4 import BeautifulSoup
 
 USER_AGENTS = user_agent_list = [
@@ -115,8 +116,8 @@ def save(band):
 
 def run():
 
-    randomband = RandomBand()
-    randomband.get()
+    metalscraper = MetalScraper
+    print(metalscraper)
     #print(band_id)
 
     #get_maximum_id()

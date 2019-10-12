@@ -3,3 +3,4 @@ env/
 mock/
 cache/
 libs/__pycache__/
+libs/scraper/__pycache__/
