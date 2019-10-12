@@ -116,8 +116,8 @@ def save(band):
 
 def run():
 
-    metalscraper = MetalScraper
-    print(metalscraper)
+    metalscraper = MetalScraper()
+    metalscraper.scrape()
     #print(band_id)
 
     #get_maximum_id()
