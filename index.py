@@ -1,6 +1,7 @@
 import random
 import urllib.request
 import sqlite3
+from libs.RandomBand import RandomBand
 from bs4 import BeautifulSoup
 
 USER_AGENTS = user_agent_list = [
@@ -114,7 +115,11 @@ def save(band):
 
 def run():
 
-    get_maximum_id()
+    randomband = RandomBand()
+    randomband.get()
+    #print(band_id)
+
+    #get_maximum_id()
 
     """
     html = get_file()
