@@ -30,14 +30,38 @@ USER_AGENTS = user_agent_list = [
     'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)'
 ]
+LOCAL = True
 
-def getFile():
-    local = True
-    bandUrl = 'mock/3540321652.html'
-    if(local):
-        with open(bandUrl, 'r') as f:
+def get_maximum_id():
+    
+    if(LOCAL):
+        home_url = 'mock/home.html'
+        enc = 'utf-8'
+        with open(home_url, 'r', encoding=enc) as f:
             data = f.read()
-    else:        
+    """ 
+    else:
+        user_agent = random.choice(USER_AGENTS)
+        request = urllib.request.Request(band_url)
+        request.add_header('User-Agent', user_agent)
+        data = urllib.request.urlopen(request).read()
+    """
+    soup = BeautifulSoup(data, 'html.parser')
+    latest_url = soup.find('div', {'id': 'additionBands'}).find('a')['href']
+    latest_url = latest_url.split('/')
+    max_value = latest_url.pop()
+
+    return max_value
+
+def get_file(bandId = 0):
+    
+    if(LOCAL):
+        bandUrl = 'mock/3540321652.html'
+        enc = 'utf-8'
+        with open(bandUrl, 'r', encoding=enc) as f:
+            data = f.read()
+    else:
+        bandUrl = 'https://www.metal-archives.com/band/view/id/' + bandId
         user_agent = random.choice(USER_AGENTS)
         request = urllib.request.Request(bandUrl)
         request.add_header('User-Agent', user_agent)
@@ -72,7 +96,7 @@ def cache_band_logo(logo_url):
     f.close()
     
     return filename
-    
+
 # From https://github.com/alikoneko/metal-scraper/
 def save(band):
     placeholder = ", ".join(["?"] * len(band))
@@ -89,7 +113,11 @@ def save(band):
     return cur.lastrowid
 
 def run():
-    html = getFile()
+
+    get_maximum_id()
+
+    """
+    html = get_file()
     soup = BeautifulSoup(html, 'html.parser')
     band = {}
 
@@ -103,7 +131,8 @@ def run():
     band["cached_logo_url"] = cache_band_logo(band["live_logo_url"])
     stats = get_band_stats(soup)
     band.update(stats)
-    save(band)
+    #save(band)
+    """
 
 if __name__ == "__main__":
     run()
